@@ -3,7 +3,7 @@ import Header from "./Header"
 import Total from "./Total"
 
 const Course = (props) => {
-  const course =  props.course
+  const {course} =  props
   return (
     <div>
       <Header course={course['name']} />
