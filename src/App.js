@@ -1,52 +1,96 @@
-import Course from "./components/Course"
+import { useState } from "react"
+import Person from "./components/Person"
 
 const App = () => {
-  const courses = [
-    {
-      name: 'Half Stack application development',
-      id: 1,
-      parts: [
-        {
-          name: 'Fundamentals of React',
-          exercises: 10,
-          id: 1
-        },
-        {
-          name: 'Using props to pass data',
-          exercises: 7,
-          id: 2
-        },
-        {
-          name: 'State of a component',
-          exercises: 14,
-          id: 3
-        },
-        {
-          name: 'Redux',
-          exercises: 11,
-          id: 4
-        }
-      ]
-    }, 
-    {
-      name: 'Node.js',
-      id: 2,
-      parts: [
-        {
-          name: 'Routing',
-          exercises: 3,
-          id: 1
-        },
-        {
-          name: 'Middlewares',
-          exercises: 7,
-          id: 2
-        }
-      ]
-    }
-  ]
+  const [persons, setPersons] = useState([
+    { name: 'Arto Hellas' }
+  ]) 
+  const [newName, setNewName] = useState('')
 
-  return courses.map((course) => <Course key={course.name} course={course} />)
+  const addName = (event) => {
+    event.preventDefault()
+    const nameObject = {
+      name: newName,
+      id: persons.length + 1,
+    }
+
+    setPersons(persons.concat(nameObject))
+    setNewName('')
+  }
+
+  const handleNoteChange = (event) => {
+    setNewName(event.target.value)
+  }
+
+  return (
+    <div>
+      <h2>Phonebook</h2>
+      <form onSubmit={addName}>
+        <div>
+          name: <input value={newName} onChange={handleNoteChange} />
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
+      </form>
+      <h2>Numbers</h2>
+      <ul>
+        <ul>
+          {persons.map(person => 
+            <Person key={person.id} person={person} />
+          )}
+        </ul>
+      </ul>
+    </div>
+  )
 }
+
+// const App = (props) => {
+//   const [notes, setNotes] = useState([])
+//   const [newNote, setNewNote] = useState('')
+//   const [showAll, setShowAll] = useState(false)
+
+//   const addNote = (event) => {
+//     event.preventDefault()
+//     const noteObject = {
+//       content: newNote,
+//       important: Math.random() > 0.5,
+//       id: notes.length + 1,
+//     }
+
+//     setNotes(notes.concat(noteObject))
+//     setNewNote('')
+//   }
+
+//   const handleNoteChange = (event) => {
+//     setNewNote(event.target.value)
+//   }
+
+//   const notesToShow = showAll
+//     ? notes
+//     : notes.filter(note => note.important)
+
+//   return (
+//     <div>
+//       <h1>Notes</h1>
+//       <div>
+//         <button onClick={() => setShowAll(!showAll)}>
+//           show {showAll ? 'important' : 'all' }
+//         </button>
+//       </div> 
+      // <ul>
+      //   <ul>
+      //     {notesToShow.map(note => 
+      //       <Note key={note.id} note={note} />
+      //     )}
+      //   </ul>
+      // </ul>
+//       <form onSubmit={addNote}>
+//         <input value={newNote} onChange={handleNoteChange} />
+//         <button type="submit">save</button>
+//       </form>
+//     </div>
+//   )
+// }
 
 export default App
