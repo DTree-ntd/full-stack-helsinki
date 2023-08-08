@@ -1,6 +1,4 @@
 const PersonForm = ({name, handleName, number, handleNumber, handleNewPerson}) => {
-  console.log(`number::::::${number}`);
-  
   return (
     <form onSubmit={handleNewPerson}>
         <div>
