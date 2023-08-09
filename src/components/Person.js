@@ -1,9 +1,12 @@
-const Person = ({ persons, keyword }) => {
+const Person = ({ persons, keyword, handleRemovePerson }) => {
   return (
     <ul>
       <ul>
         {persons.filter(person => person.name.toLowerCase().includes(keyword.toLowerCase())).map(person => 
-           <li>{person.name} {person.number}</li>
+           <li key={person.id}>
+            {person.name} {person.number}
+            <button onClick={() => handleRemovePerson(person)}>delete</button>
+          </li>
         )}
       </ul>
     </ul>

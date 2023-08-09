@@ -11,7 +11,6 @@ const App = () => {
   const [keyword, setKeyword] = useState('')
 
   useEffect(() => {
-    console.log('effect')
     personService
       .getAll()
       .then(initialPersons => {
@@ -45,6 +44,21 @@ const App = () => {
     })
   }
 
+  const removePerson = (person) => {
+    if (window.confirm(`Delete ${person.name}?`)) {
+      personService
+        .remove(person.id)
+        .then(returnedPerson => {
+          setPersons(persons.filter(p => p.id !== person.id))
+        })
+        .catch(error => {
+          alert(
+            `the person is not exist`
+          )
+        })
+    }
+  }
+
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
@@ -69,7 +83,7 @@ const App = () => {
 
       <h2>Numbers</h2>
 
-      <Person persons={persons} keyword={keyword}/>
+      <Person persons={persons} keyword={keyword} handleRemovePerson={removePerson}/>
     </div>
   )
 }
